@@ -1,0 +1,30 @@
+services:
+  front:
+    image: front:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./secrets/app1.json:/app/settings.json
+  backend:
+    image: backend:latest
+    volumes:
+      - ./secrets/app2.json:/app/settings.json
+  backend-generator:
+    image: backend:latest
+    volumes:
+      - ./secrets/app3.json:/app/settings.json
+  storage:
+    image: storage:latest
+    volumes:
+      - ./secrets/app4.json:/app/settings.json
+      - ~/apps/storage:/data
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=citizix_user
+      - POSTGRES_DB=citizix_db
